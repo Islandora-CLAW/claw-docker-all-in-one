@@ -1,0 +1,42 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+# Installs the database if does not exist.
+#
+# When installing it removes all existing users and configures the 'root' user.
+# Also removes the 'test' database which presents a security risk.
+with-contenv
+if -t { s6-test ! -d "/var/lib/mysql/mysql" }
+foreground { s6-setuidgid mysql mysql_install_db --user mysql }
+foreground { mkdir /run/mysqld }
+foreground { chown mysql:mysql /run/mysqld }
+background { s6-setuidgid mysql mysqld --skip-networking }
+importas MYSQLD_PID !
+foreground {
+    foreground {
+        loopwhilex -x 0
+        redirfd -w 1 /dev/null
+        redirfd -w 2 /dev/null
+        mysql --protocol=socket -uroot -e "SELECT 1"
+    }
+    foreground {
+        pipeline {
+            multisubstitute
+            {
+                import -D "root" MYSQL_ROOT_USER
+                import MYSQL_ROOT_PASSWORD
+            }
+            echo "SET @@SESSION.SQL_LOG_BIN=0;
+                  DELETE FROM mysql.user ;
+                  CREATE USER \"${MYSQL_ROOT_USER}\"@\"%\" IDENTIFIED BY \"${MYSQL_ROOT_PASSWORD}\" ;
+                  GRANT ALL ON *.* TO \"${MYSQL_ROOT_USER}\"@\"%\" WITH GRANT OPTION ;
+                  DROP DATABASE IF EXISTS test ;
+                  FLUSH PRIVILEGES ;"
+        }
+        mysql --protocol=socket -uroot
+    }
+    foreground {
+        kill -s TERM $MYSQLD_PID
+    }
+    sleep 5
+}

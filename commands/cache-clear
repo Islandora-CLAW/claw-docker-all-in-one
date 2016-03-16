@@ -1,0 +1,17 @@
+#!/bin/bash
+# We must force clear the file cache so Virtualbox Shared folders work correctly
+# with Docker (in particular boot2docker), otherwise Docker see's the version of the file when first
+# mounted.
+#
+# You will have to run this file when any problems arise with syncing it really
+# only applies to boot2docker images.
+#
+# See the following issues for more details:
+#
+# https://www.virtualbox.org/ticket/9069
+# https://www.virtualbox.org/ticket/14920
+# https://github.com/boot2docker/boot2docker/issues/1069
+readonly machines=$(docker-machine ls  | tail -n +2 | awk '{ print $1 }')
+for machine in $machines; do
+    docker-machine ssh $machine sudo /usr/sbin/cache-clear 2> /dev/null
+done

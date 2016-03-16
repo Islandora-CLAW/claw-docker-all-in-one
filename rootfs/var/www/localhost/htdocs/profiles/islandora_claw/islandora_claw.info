@@ -1,0 +1,122 @@
+; Packaging information for islandora_claw
+name = "Islandora CLAW"
+description = ""
+exclusive = "1"
+core = "7.x"
+; ----------
+; Dependencies
+; ----------
+; Administration
+dependencies[] = admin_menu
+dependencies[] = admin_menu_toolbar
+; Chaos tool suite
+dependencies[] = ctools
+; Core
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = user
+; Development
+dependencies[] = devel
+dependencies[] = profiler_builder
+dependencies[] = profiler_builder_extras
+; Drupal
+dependencies[] = hook_post_action
+; Fields
+dependencies[] = field_permissions
+dependencies[] = field_readonly
+dependencies[] = xml_field
+; Other
+dependencies[] = entity
+; Performance and scalability
+dependencies[] = httprl
+; RDF
+dependencies[] = rdfx
+; Search Toolkit
+dependencies[] = apachesolr
+dependencies[] = apachesolr_search
+; Services
+dependencies[] = services
+; UUID
+dependencies[] = uuid
+; User interface
+dependencies[] = jquery_update
+; Views
+dependencies[] = views
+; XML Fields
+dependencies[] = xpath_field
+; Islandora
+dependencies[] = islandora
+dependencies[] = islandora_dc
+dependencies[] = islandora_mods
+dependencies[] = islandora_basic_image
+dependencies[] = islandora_collection
+dependencies[] = islandora_apachesolr
+dependencies[] = islandora_delete_by_fedora_uri_service
+dependencies[] = islandora_medium_size_service
+dependencies[] = islandora_tn_service
+
+; ----------
+; Variables
+; ----------
+variables[admin_theme] = 'seven'
+variables[apachesolr_search_mlt_blocks][mlt-001][name] = 'More like this'
+variables[apachesolr_search_mlt_blocks][mlt-001][num_results] = '5'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_fl][label] = 'label'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_fl][taxonomy_names] = 'taxonomy_names'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_env_id] = 'solr'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_mintf] = '1'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_mindf] = '1'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_minwl] = '3'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_maxwl] = '15'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_maxqt] = '20'
+variables[apachesolr_search_mlt_blocks][mlt-001][mlt_custom_filters] = ''
+variables[apachesolr_search_mlt_blocks][mlt-001][delta] = 'mlt-001'
+variables[cache_class_cache_ctools_css] = 'CToolsCssCache'
+variables[date_default_timezone] = 'UTC'
+variables[filter_fallback_format] = 'plain_text'
+variables[javascript_parsed][0] = 'misc/drupal.js'
+variables[javascript_parsed][1] = 'sites/all/modules/contrib/jquery_update/replace/jquery/1.10/jquery.min.js'
+variables[javascript_parsed][2] = 'misc/jquery.once.js'
+variables[javascript_parsed][3] = 'sites/all/modules/contrib/devel/devel_krumo_path.js'
+variables[javascript_parsed][4] = 'modules/contextual/contextual.js'
+variables[javascript_parsed][5] = 'sites/all/modules/contrib/admin_menu/admin_menu.js'
+variables[javascript_parsed][6] = 'sites/all/modules/contrib/admin_menu/admin_menu_toolbar/admin_menu_toolbar.js'
+variables[javascript_parsed][7] = 'sites/all/modules/contrib/jquery_update/replace/ui/external/jquery.cookie.js'
+variables[javascript_parsed][8] = 'misc/tabledrag.js'
+variables[javascript_parsed][9] = 'misc/tableheader.js'
+variables[javascript_parsed][10] = 'misc/form.js'
+variables[javascript_parsed][11] = 'sites/all/modules/contrib/profiler_builder/js/profiler_builder.js'
+variables[javascript_parsed][12] = 'misc/states.js'
+variables[node_admin_theme] = '1'
+variables[node_options_page][0] = 'status'
+variables[services_security_update_1] = true
+variables[theme_default] = 'bootstrap'
+variables[user_pictures] = '1'
+variables[user_picture_dimensions] = '1024x1024'
+variables[user_picture_file_size] = '800'
+variables[user_picture_style] = 'thumbnail'
+variables[user_register] = '2'
+

@@ -1,0 +1,26 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+with-contenv
+foreground {
+    # Wait for Drupal
+    foreground { dockerize -wait tcp://localhost:80 -timeout 5m }
+    # Wait for Tomcat
+    foreground { dockerize -wait tcp://localhost:8080 -timeout 5m }
+    # Wait for JMS
+    foreground { dockerize -wait tcp://localhost:61616 -timeout 5m }
+    multisubstitute
+    {
+        import PATH
+        import JAVA_HOME
+        import JAVA_OPTS
+    }
+    s6-env -i
+    PATH=$PATH
+    JAVA_HOME=$JAVA_HOME
+    JAVA_OPTS=$JAVA_OPTS
+    # We should run karaf as it's own user, but it just doesn't work and I've spent
+    # way to much time on this (this is security issue).
+    # s6-setuidgid karaf
+    /opt/karaf/bin/karaf server
+}

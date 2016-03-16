@@ -1,0 +1,5 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+foreground { /usr/local/bin/dockerize -wait tcp://localhost:3306 -timeout 5m }
+/usr/sbin/apachectl -DFOREGROUND

@@ -1,0 +1,3 @@
+#!/bin/bash
+args="$@"
+docker exec -ti islandora-claw sh -c "cd /var/www/localhost/htdocs; drush $args"

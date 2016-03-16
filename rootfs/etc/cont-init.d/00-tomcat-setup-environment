@@ -1,0 +1,16 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh :
+with-contenv
+# Check to see if required enviroment variables were provided, and set defaults.
+multisubstitute
+{
+    import -D "admin" TOMCAT_ADMIN_USER
+    import -i TOMCAT_ADMIN_PASSWORD
+}
+foreground {
+    s6-env -i
+    TOMCAT_ADMIN_USER=$TOMCAT_ADMIN_USER
+    TOMCAT_ADMIN_PASSWORD=$TOMCAT_ADMIN_PASSWORD
+    s6-dumpenv -- /var/run/s6/container_environment
+}

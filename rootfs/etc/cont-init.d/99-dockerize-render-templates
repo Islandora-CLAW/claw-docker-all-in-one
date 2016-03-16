@@ -1,0 +1,15 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+# Looks for every template in the file system and renders them with the
+# container enviroment variables, also duplicates their ownership and
+# permissions.
+#
+# This is the last setup script to run so make your permission and ownership
+# settings are applied to the templates before hand.
+with-contenv
+find / -type f -name "*.tmpl" -exec sh -c "
+dockerize --template ${0}:${0%.tmpl};
+chown $(stat -c '%U:%G' \"$0\") \"${0%.tmpl}\";
+chmod $(stat -c '%a' \"$0\") \"${0%.tmpl}\";"
+{} \;

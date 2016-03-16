@@ -1,0 +1,5 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+if -n { s6-test -f /etc/ssh/ssh_host_* }
+ssh-keygen -A

@@ -1,0 +1,13 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+with-contenv
+multisubstitute
+{
+  import -i DRUPAL_SITE_ACCOUNT_PASSWORD
+  import -i DRUPAL_SITE_DB_PASSWORD
+}
+s6-env -i
+DRUPAL_SITE_ACCOUNT_PASSWORD=$DRUPAL_SITE_ACCOUNT_PASSWORD
+DRUPAL_SITE_DB_PASSWORD=$DRUPAL_SITE_DB_PASSWORD
+s6-dumpenv -- /var/run/s6/container_environment

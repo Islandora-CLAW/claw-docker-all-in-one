@@ -1,0 +1,63 @@
+#!/bin/bash
+# Generates secrets files with random passwords if not present.
+set -u
+set -e
+
+readonly ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+random_password() {
+    LC_CTYPE=C tr -dc _A-Za-z0-9 < /dev/urandom | head -c${1:-32}; echo;
+}
+
+generate_mariadb_env_file() {
+  cat <<EOF > $ROOT/env_files/mariadb.env
+MYSQL_ROOT_USER=root
+MYSQL_ROOT_PASSWORD=$(random_password)
+EOF
+}
+
+generate_drupal_env_file() {
+  cat <<EOF > $ROOT/env_files/drupal.env
+DRUPAL_SITE_NAME=Islandora CLAW
+DRUPAL_SITE_EMAIL=webmaster@localhost.com
+DRUPAL_SITE_LOCALE=en-us
+DRUPAL_SITE_ACCOUNT_NAME=admin
+DRUPAL_SITE_ACCOUNT_PASSWORD=$(random_password)
+DRUPAL_SITE_ACCOUNT_EMAIL=webmaster@localhost.com
+DRUPAL_SITE_DB_NAME=drupal_default
+DRUPAL_SITE_DB_USER=drupal
+DRUPAL_SITE_DB_PASSWORD=$(random_password)
+DRUPAL_SITE_DB_REPLACE_EXISTING=no
+EOF
+}
+
+generate_tomcat_env_file() {
+  cat <<EOF > $ROOT/env_files/tomcat.env
+TOMCAT_ADMIN_USER=admin
+TOMCAT_ADMIN_PASSWORD=$(random_password)
+EOF
+}
+
+generate_karaf_env_file() {
+  cat <<EOF > $ROOT/env_files/karaf.env
+EOF
+}
+
+main () {
+  if ! [ -d $ROOT/env_files ]; then
+      mkdir $ROOT/env_files
+  fi
+  if ! [ -f $ROOT/env_files/mariadb.env ]; then
+      generate_mariadb_env_file
+  fi
+  if ! [ -f $ROOT/env_files/drupal.env ]; then
+      generate_drupal_env_file
+  fi
+  if ! [ -f $ROOT/env_files/tomcat.env ]; then
+      generate_tomcat_env_file
+  fi
+  if ! [ -f $ROOT/env_files/karaf.env ]; then
+      generate_karaf_env_file
+  fi
+}
+main "$@"

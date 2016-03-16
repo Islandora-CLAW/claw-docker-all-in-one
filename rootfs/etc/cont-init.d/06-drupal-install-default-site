@@ -1,0 +1,84 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+with-contenv
+multisubstitute
+{
+    import -D "root" MYSQL_ROOT_USER
+    import -i MYSQL_ROOT_PASSWORD
+    import -D "drupal_default" DRUPAL_SITE_DB_NAME
+}
+foreground {
+    background { s6-setuidgid mysql mysqld --skip-networking }
+    importas MYSQLD_PID !
+    foreground {
+        foreground {
+            loopwhilex -x 0
+            redirfd -w 1 /dev/null
+            redirfd -w 2 /dev/null
+            mysql --protocol=socket -u ${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD} -e "SELECT 1"
+        }
+        # Check if the Database is already populated with tables.
+        backtick -ni DRUPAL_SITE_DB_TABLES {
+            mysql
+            --user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}
+            -Ne "SELECT COUNT(DISTINCT `table_name`)
+             FROM `information_schema`.`columns`
+             WHERE `table_schema` = '${DRUPAL_SITE_DB_NAME}'"
+        }
+        multisubstitute
+        {
+            define MYSQL_HOST localhost
+            define MYSQL_HOST_PORT 3306
+            import -D "root" MYSQL_ROOT_USER
+            import -i MYSQL_ROOT_PASSWORD
+            import -D "Islandora CLAW" DRUPAL_SITE_NAME
+            import -D "webmaster@localhost.com" DRUPAL_SITE_EMAIL
+            import -D "en-us" DRUPAL_SITE_LOCALE
+            import -D "admin" DRUPAL_SITE_ACCOUNT_NAME
+            import -i DRUPAL_SITE_ACCOUNT_PASSWORD
+            import -D "webmaster@localhost.com" DRUPAL_SITE_ACCOUNT_EMAIL
+            import -D "drupal_default" DRUPAL_SITE_DB_NAME
+            import -D "drupal" DRUPAL_SITE_DB_USER
+            import -i DRUPAL_SITE_DB_PASSWORD
+            import -D 0 DRUPAL_SITE_DB_REPLACE_EXISTING
+            import -i DRUPAL_SITE_DB_TABLES
+        }
+        # Only install if Database is not populated or if the variable
+        # $DRUPAL_SITE_DB_REPLACE_EXISTING has been explicity set
+        ifelse { s6-test $DRUPAL_SITE_DB_TABLES -eq 0 -o $DRUPAL_SITE_DB_REPLACE_EXISTING = "yes" } {
+            # Install the site, using the standard profile
+            # and don't send a e-mail notification.
+            cd /var/www/localhost/htdocs s6-setuidgid apache drush -y si
+            islandora_claw install_configure_form.update_status_module='array(FALSE,FALSE)'
+            --sites-subdir=default
+            --site-name="${DRUPAL_SITE_NAME}"
+            --site-mail="${DRUPAL_SITE_EMAIL}"
+            --locale="${DRUPAL_SITE_LOCALE}"
+            --account-name="${DRUPAL_SITE_ACCOUNT_NAME}"
+            --account-pass="${DRUPAL_SITE_ACCOUNT_PASSWORD}"
+            --account-mail="${DRUPAL_SITE_ACCOUNT_EMAIL}"
+            --db-url="mysql://${DRUPAL_SITE_DB_USER}:${DRUPAL_SITE_DB_PASSWORD}@${MYSQL_HOST}:${MYSQL_HOST_PORT}/${DRUPAL_SITE_DB_NAME}"
+            --db-su="${MYSQL_ROOT_USER}" --db-su-pw="${MYSQL_ROOT_PASSWORD}"
+        }
+        multisubstitute
+        {
+            define MYSQL_HOST localhost
+            define MYSQL_HOST_PORT 3306
+            import -D "drupal_default" DRUPAL_SITE_DB_NAME
+            import -D "drupal" DRUPAL_SITE_DB_USER
+            import -i DRUPAL_SITE_DB_PASSWORD
+        }
+        foreground {
+            # Create settings.php if we're using an exisiting database,
+            # we don't check the credentials to see if they match.
+            cd /var/www/localhost/htdocs s6-setuidgid apache drush eval "
+            include DRUPAL_ROOT.'/includes/install.inc';
+            include DRUPAL_ROOT.'/includes/update.inc';
+            global $db_prefix;
+            $url = 'mysql://${DRUPAL_SITE_DB_USER}:${DRUPAL_SITE_DB_PASSWORD}@${MYSQL_HOST}:${MYSQL_HOST_PORT}/${DRUPAL_SITE_DB_NAME}';
+            $db['databases']['value'] = update_parse_db_url($url, $db_prefix);
+            drupal_rewrite_settings($db, $db_prefix);"
+        } cd /var/www/localhost/htdocs s6-setuidgid apache drush cc all
+    } kill -s TERM $MYSQLD_PID
+} sleep 5

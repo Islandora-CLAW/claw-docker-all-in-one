@@ -1,0 +1,11 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+with-contenv
+# This will eventually be replaced with alterations to the install profile such
+# that conf generated for settings.php contains the required info for the apache
+# Solr module to setup itself during the site install.
+foreground {
+  cd /var/www/localhost/htdocs drush sqlq "update apachesolr_environment set url='http://localhost:8080/solr'"
+}
+cd /var/www/localhost/htdocs drush cc all

@@ -1,0 +1,41 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+with-contenv
+multisubstitute
+{
+  import -D "root" MYSQL_ROOT_USER
+  import -i MYSQL_ROOT_PASSWORD
+  import -D "drupal_default" DRUPAL_SITE_DB_NAME
+  import -D "drupal" DRUPAL_SITE_DB_USER
+  import -i DRUPAL_SITE_DB_PASSWORD
+}
+foreground {
+    background { s6-setuidgid mysql mysqld --skip-networking }
+    importas MYSQLD_PID !
+    foreground {
+        foreground {
+            loopwhilex -x 0
+            redirfd -w 1 /dev/null
+            redirfd -w 2 /dev/null
+            mysql --protocol=socket -u ${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD} -e "SELECT 1"
+        }
+        # Only create the database and user for Drupal if
+        # the database does not already exist.
+        ifelse -n {
+            redirfd -w 2 /dev/null
+            mysql
+            --user=${MYSQL_ROOT_USER} --password=${MYSQL_ROOT_PASSWORD}
+            -e use ${DRUPAL_SITE_DB_NAME}
+        }
+        {
+            redirfd -w 2 /dev/null
+            mysql
+            --user=root --password=${MYSQL_ROOT_PASSWORD}
+            -e "CREATE USER '${DRUPAL_SITE_DB_USER}'@'localhost' IDENTIFIED BY '${DRUPAL_SITE_DB_PASSWORD}';
+                CREATE DATABASE ${DRUPAL_SITE_DB_NAME};
+                GRANT ALL ON ${DRUPAL_SITE_DB_NAME}.* TO '${DRUPAL_SITE_DB_USER}'@'localhost';"
+        }
+        kill -s TERM $MYSQLD_PID
+    } kill -s TERM $MYSQLD_PID
+} sleep 5

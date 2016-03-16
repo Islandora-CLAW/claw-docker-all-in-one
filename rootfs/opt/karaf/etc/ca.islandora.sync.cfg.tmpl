@@ -1,0 +1,7 @@
+islandora.drupal.baseurl = localhost/islandora
+islandora.drupal.username = {{ default .Env.DRUPAL_SITE_ACCOUNT_NAME "admin" }}
+islandora.drupal.password = {{ .Env.DRUPAL_SITE_ACCOUNT_PASSWORD }}
+islandora.fcrepo.baseurl = localhost:8080/fcrepo/rest
+islandora.php.workingDir = /opt/claw/camel/commands/bin
+islandora.php.executable = islandora.php
+islandora.triplestore.baseurl = localhost:8080/bigdata/namespace/kb/sparql

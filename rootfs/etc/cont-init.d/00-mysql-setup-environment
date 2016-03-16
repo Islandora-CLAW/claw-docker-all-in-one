@@ -1,0 +1,12 @@
+#!/usr/bin/execlineb -P
+# -*- mode: sh -*-
+# vi: set ft=sh:
+# Check to see if required enviroment variables were provided, and set defaults.
+with-contenv
+multisubstitute
+{
+    import -i MYSQL_ROOT_PASSWORD
+}
+s6-env -i
+MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+s6-dumpenv -- /var/run/s6/container_environment

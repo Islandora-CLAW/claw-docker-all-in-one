@@ -1,0 +1,23 @@
+version: "2"
+services:
+  islandora-claw: 
+    build: ./
+    image: islandora-claw/all-in-one
+    container_name: islandora-claw
+    env_file:
+       - ./env_files/drupal.env
+       - ./env_files/karaf.env
+       - ./env_files/tomcat.env
+       - ./env_files/mariadb.env
+    volumes:
+      - "/var/www/localhost/htdocs/sites/default/files"
+      - "/var/lib/mysql"
+      - "/opt/solr/collection1/data"
+      - "/opt/blazegraph"
+      - "/opt/karaf/data"
+      - "/mnt/fedora-data"
+    ports:
+      - "80:80"
+      - "3306:3306"
+      - "8080:8080"
+      - "8181:8181"
