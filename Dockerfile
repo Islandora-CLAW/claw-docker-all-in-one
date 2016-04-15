@@ -2,7 +2,7 @@ FROM islandora-claw/base
 MAINTAINER Nigel Banks <nigel.g.banks@gmail.com>
 
 LABEL "Description"="Islandora CLAW: Kitchen sink" \
-      "License"="GPLv3" \
+      "License"="MIT" \
       "Version"="0.0.1"
 
 EXPOSE 80

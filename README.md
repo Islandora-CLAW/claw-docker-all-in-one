@@ -157,4 +157,4 @@ If you would like to contribute code to the project, you need to be covered by a
 
 ### License
 
-[GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt)
+[MIT](https://opensource.org/licenses/MIT)
