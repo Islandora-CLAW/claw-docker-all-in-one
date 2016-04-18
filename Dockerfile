@@ -220,7 +220,7 @@ RUN drush dl -y --destination=/var/www/localhost --drupal-project-rename=htdocs 
     chown apache:apache ${DRUPAL_ROOT} && \
     cleanup
 
-RUN curl -L https://github.com/Islandora-CLAW/claw_install_profile/archive/master.tar.gz | \
+RUN curl -L https://github.com/nigelgbanks/claw_install_profile/archive/master.tar.gz | \
     tar -xzf - -C ${DRUPAL_ROOT}/profiles && \
     mv ${DRUPAL_ROOT}/profiles/claw_install_profile-master ${DRUPAL_ROOT}/profiles/claw_install_profile && \
     mkdir ${DRUPAL_ROOT}/sites/all/libraries/ARC2 && \
