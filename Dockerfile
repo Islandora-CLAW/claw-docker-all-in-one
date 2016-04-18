@@ -12,6 +12,13 @@ EXPOSE 3306
 
 ENV TERM=xterm
 
+#####################
+# Install Dockerize #
+#####################
+ARG DOCKERIZE_VERSION="0.2.0"
+RUN curl -L https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz | \
+    tar -xzf - -C /usr/local/bin
+
 ##############################
 # Common Packages & devtools #
 ##############################
