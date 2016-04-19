@@ -1,4 +1,4 @@
-FROM islandora-claw/base
+FROM islandora/claw-base
 MAINTAINER Nigel Banks <nigel.g.banks@gmail.com>
 
 LABEL "Description"="Islandora CLAW: Kitchen sink" \
