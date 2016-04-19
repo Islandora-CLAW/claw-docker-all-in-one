@@ -14,7 +14,7 @@ It's provided for the purposes of easing testing and development, but is not int
 ### Install
 
 Please see the [install
-documentation](https://github.com/nigelgbanks/claw-docker/blob/master/docs/install-guide.md)
+documentation](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/install-guide.md)
 in our main Docker repository.
 
 ### Usage
@@ -43,7 +43,7 @@ Once the files have been generated simply run:
 To run in the foreground.
 
 Please refer to our [Docker User
-Guide](https://github.com/nigelgbanks/claw-docker/blob/master/docs/docker-user-guide.md)
+Guide](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/docker-user-guide.md)
 for more information on using Docker Compose.
 
 ### Includes
