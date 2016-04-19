@@ -65,7 +65,7 @@ RUN curl -L http://ftp.ps.pl/pub/apache/maven/maven-${MAVEN_VERSION%%.*}/${MAVEN
 ##########
 # Tomcat #
 ##########
-ARG TOMCAT_VERSION="7.0.68"
+ARG TOMCAT_VERSION="7.0.69"
 
 ENV CATALINA_HOME=/opt/tomcat \
     CATALINA_BASE=/opt/tomcat \
