@@ -2,7 +2,7 @@ version: "2"
 services:
   islandora-claw: 
     build: ./
-    image: islandora-claw/all-in-one
+    image: islandora/claw-all-in-one
     container_name: islandora-claw
     env_file:
        - ./env_files/drupal.env

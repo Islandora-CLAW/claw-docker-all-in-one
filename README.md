@@ -77,7 +77,7 @@ for more information on using Docker Compose.
 
 **Example:**
 ```bash
-docker build --build-arg "TOMCAT_VERSION=7.0.68" -t islandora-claw/all-in-one .
+docker build --build-arg "TOMCAT_VERSION=7.0.68" -t islandora/claw-all-in-one .
 ```
 
 ### Environment Variables
@@ -111,7 +111,7 @@ docker run --rm -ti -P  \
                     -e "MYSQL_ROOT_PASSWORD=your_super_secure_password" \
                     -e "DRUPAL_SITE_ACCOUNT_PASSWORD=your_super_secure_password" \
                     -e "DRUPAL_SITE_DB_PASSWORD=your_super_secure_password" \
-                    islandora-claw/all-in-one ash
+                    islandora/claw-all-in-one ash
 ```
 
 ### Commands
