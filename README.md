@@ -1,9 +1,9 @@
 # Islandora CLAW: All in One Docker Image
 
-[![Docker Stars](https://img.shields.io/docker/stars/islandora-CLAW/all-in-one.svg)](https://hub.docker.com/r/islandora-CLAW/all-in-one/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/islandora-CLAW/all-in-one.svg)](https://hub.docker.com/r/islandora-CLAW/all-in-one/)
-[![Image Size](https://img.shields.io/imagelayers/image-size/islandora-CLAW/all-in-one/latest.svg)](https://imagelayers.io/?images=islandora-CLAW/all-in-one:latest)
-[![Image Layers](https://img.shields.io/imagelayers/layers/islandora-CLAW/all-in-one/latest.svg)](https://imagelayers.io/?images=islandora-CLAW/all-in-one:latest)
+[![Docker Stars](https://img.shields.io/docker/stars/islandora/claw-all-in-one.svg)](https://hub.docker.com/r/islandora/claw-all-in-one/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/islandora/claw-all-in-one.svg)](https://hub.docker.com/r/islandora/claw-all-in-one/)
+[![Image Size](https://img.shields.io/imagelayers/image-size/islandora/claw-all-in-one/latest.svg)](https://imagelayers.io/?images=islandora/claw-all-in-one:latest)
+[![Image Layers](https://img.shields.io/imagelayers/layers/islandora/claw-all-in-one/latest.svg)](https://imagelayers.io/?images=islandora/claw-all-in-one:latest)
 
 ### Introduction
 
