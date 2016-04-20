@@ -7,7 +7,7 @@
 
 ## Introduction
 
-This is a single image will install the dependencies required to run Islandora CLAW.
+This is a single image that will install the dependencies required to run Islandora CLAW.
 
 It's provided for the purposes of easing testing and development, but is not intended for production use. 
 
