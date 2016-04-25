@@ -1,52 +1,42 @@
 # Islandora CLAW: All in One Docker Image
 
-[![Docker Stars](https://img.shields.io/docker/stars/islandora-CLAW/all-in-one.svg)](https://hub.docker.com/r/islandora-CLAW/all-in-one/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/islandora-CLAW/all-in-one.svg)](https://hub.docker.com/r/islandora-CLAW/all-in-one/)
-[![Image Size](https://img.shields.io/imagelayers/image-size/islandora-CLAW/all-in-one/latest.svg)](https://imagelayers.io/?images=islandora-CLAW/all-in-one:latest)
-[![Image Layers](https://img.shields.io/imagelayers/layers/islandora-CLAW/all-in-one/latest.svg)](https://imagelayers.io/?images=islandora-CLAW/all-in-one:latest)
+[![Docker Stars](https://img.shields.io/docker/stars/islandora/claw-all-in-one.svg)](https://hub.docker.com/r/islandora/claw-all-in-one/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/islandora/claw-all-in-one.svg)](https://hub.docker.com/r/islandora/claw-all-in-one/)
 
-### Introduction
+## Introduction
 
-This is a single image will all the dependencies required to run Islandora CLAW.
+This is a single image that will install the dependencies required to run Islandora CLAW.
 
 It's provided for the purposes of easing testing and development, but is not intended for production use. 
 
-### Install
+## Install
 
-Please see the [install
-documentation](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/install-guide.md)
+Please see the [install documentation](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/install-guide.md)
 in our main Docker repository.
 
-### Usage
+## Usage
 
-#### Kitematic
+### Kitematic
 
 With [Kitematic](https://kitematic.com/) you can download this Image from Docker Hub.
 
-Please read the
-[Kitematic documentation](https://docs.docker.com/kitematic/userguide/) for more
-details.
+Please read the [Kitematic documentation](https://docs.docker.com/kitematic/userguide/) for more details.
 
-If using Kitematic solely you must provide the *required*
-[Environment Variables](#environment_variables) documented below.
+If using Kitematic solely you must provide the *required* [Environment Variables](#environment_variables) documented below.
 
-#### Docker Compose
+### Docker Compose
 
-If using Docker Compose, you first must generate the environment variables
-files, by running the command ```./commands/generate-env-files``` documented
-below.
+If using Docker Compose, you first must generate the environment variables files, by running the command ```./commands/generate-env-files``` documented below.
 
 Once the files have been generated simply run:
 
-```docker-compose up```
+`docker-compose up`
 
 To run in the foreground.
 
-Please refer to our [Docker User
-Guide](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/docker-user-guide.md)
-for more information on using Docker Compose.
+Please refer to our [Docker User Guide](https://github.com/Islandora-CLAW/claw-docker/blob/master/docs/docker-user-guide.md) for more information on using Docker Compose.
 
-### Includes
+## Includes
 
 * PHP 5.6.17
 * Java 8
@@ -55,9 +45,9 @@ for more information on using Docker Compose.
 * Fedora 4.4.0
 * Solr 4.10.3
 * Blazegraph 1.5.1
-* TODO Karaf 4.0.4
+* Karaf 4.0.4
 
-### Build Arguments
+## Build Arguments
 
 | Variable           | Required |                                                      Default |
 |--------------------|----------|--------------------------------------------------------------|
@@ -72,15 +62,14 @@ for more information on using Docker Compose.
 | DRUSH_VERSION      | no       |                                                        8.0.2 |
 | DRUPAL_VERSION     | no       |                                                         7.43 |
 
-**SOLR_DEPENDENCIES** are the jar files to copy from ```example/lib/ext``` into
-```$CATALINA_HOME/lib```.
+**SOLR_DEPENDENCIES** are the jar files to copy from ```example/lib/ext``` into ```$CATALINA_HOME/lib```.
 
 **Example:**
 ```bash
 docker build --build-arg "TOMCAT_VERSION=7.0.68" -t islandora/claw-all-in-one .
 ```
 
-### Environment Variables
+## Environment Variables
 
 | Variable                        | Required | Default                                                                                                                                                                                                                                                |
 |---------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -114,10 +103,9 @@ docker run --rm -ti -P  \
                     islandora/claw-all-in-one ash
 ```
 
-### Commands
+## Commands
 
-For convenience a number of commands are provided in the [commands](/commands)
-folder.
+For convenience a number of commands are provided in the [commands](/commands) folder.
 
 | Command            | Arguments                                              | Defaults | Notes                                                    |
 |--------------------|--------------------------------------------------------|----------|----------------------------------------------------------|
@@ -128,10 +116,9 @@ folder.
 | exec               | any valid command                                      |          | Executes the given command in the container.             |
 | generate-env-files | none                                                   |          | Generates the .env files required to run docker-compose. |
 
-**N.B.** The command above assume you used ```docker-compose``` to start the
-container or you have given the container the name **islandora-claw**.
+**N.B.** The command above assumes you used `docker-compose` to start the container or you have given the container the name **islandora-claw**.
 
-### Maintainers/Sponsors
+## Maintainers/Sponsors
 
 * UPEI
 * discoverygarden inc.
@@ -148,13 +135,14 @@ container or you have given the container the name **islandora-claw**.
 Current maintainers:
 
 * [Nigel Banks](https://github.com/nigelgbanks)
+* [Nick Ruest](https://github.com/ruebot)
 
 ## Development
 
-If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). We love to hear from you!
+If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki). We love to hear from you!
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
 
-### License
+## License
 
 [MIT](https://opensource.org/licenses/MIT)
