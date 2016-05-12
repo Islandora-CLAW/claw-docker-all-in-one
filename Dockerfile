@@ -155,7 +155,7 @@ RUN addgroup karaf && \
     adduser -s /sbin/nologin -G karaf -DH -h ${KARAF_HOME} karaf
 
 RUN apk-install openssh && \
-    curl -L http://ftp.piotrkosoft.net/pub/mirrors/ftp.apache.org/karaf/${KARAF_VERSION}/apache-karaf-${KARAF_VERSION}.tar.gz | \
+    curl -L http://archive.apache.org/dist/karaf/${KARAF_VERSION}/apache-karaf-${KARAF_VERSION}.tar.gz | \
     tar -xzf - -C /tmp && \
     mv /tmp/apache-karaf-${KARAF_VERSION} /opt/karaf && \
     cleanup
