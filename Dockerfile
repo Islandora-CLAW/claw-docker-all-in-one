@@ -123,7 +123,7 @@ ARG SOLR_DEPENDENCIES="log4j-1.2.17.jar slf4j-api-1.7.6.jar slf4j-log4j12-1.7.6.
 
 ENV SOLR_HOME=/opt/solr
 
-RUN curl -L http://mirror.catn.com/pub/apache/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz | \
+RUN curl -L http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz | \
     tar -xzf - -C /tmp && \
     mkdir ${CATALINA_BASE}/webapps/solr && \
     cp /tmp/solr-${SOLR_VERSION}/dist/solr-${SOLR_VERSION}.war ${CATALINA_BASE}/webapps/solr.war && \
