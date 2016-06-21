@@ -86,7 +86,7 @@ ENV FEDORA_HOME="/mnt/fedora-data" \
 RUN mkdir -p ${FEDORA_HOME} && \
     chown tomcat:tomcat ${FEDORA_HOME} && \
     curl -o ${CATALINA_BASE}/webapps/fcrepo.war \
-    -L https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-${FEDORA_VERSION}/fcrepo-webapp-${FEDORA_VERSION}.war && \
+    -L https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-${FEDORA_VERSION}/fcrepo-webapp-plus${FEDORA_VERSION}.war && \
     mkdir ${CATALINA_BASE}/webapps/fcrepo && \
     unzip -o ${CATALINA_BASE}/webapps/fcrepo.war -d ${CATALINA_HOME}/webapps/fcrepo && \
     rm -rf ${CATALINA_HOME}/webapps/*.war && \
