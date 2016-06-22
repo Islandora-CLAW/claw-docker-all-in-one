@@ -123,7 +123,7 @@ ARG SOLR_DEPENDENCIES="log4j-1.2.17.jar slf4j-api-1.7.6.jar slf4j-log4j12-1.7.6.
 
 ENV SOLR_HOME=/opt/solr
 
-RUN curl -L http://mirror.catn.com/pub/apache/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz | \
+RUN curl -L http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz | \
     tar -xzf - -C /tmp && \
     mkdir ${CATALINA_BASE}/webapps/solr && \
     cp /tmp/solr-${SOLR_VERSION}/dist/solr-${SOLR_VERSION}.war ${CATALINA_BASE}/webapps/solr.war && \
@@ -234,22 +234,27 @@ RUN curl -L https://github.com/Islandora-CLAW/claw_install_profile/archive/maste
 ####################
 ENV CLAW_HOME=/opt/claw
 
+# Git sub-module's require Perl.
+RUN apk-install perl
+
 RUN git clone https://github.com/Islandora-CLAW/CLAW.git ${CLAW_HOME} && \
+    cd ${CLAW_HOME} && git submodule update --init --recursive && \
     chmod -R a+rx ${CLAW_HOME}
 
 ###############################
-# Download Maven Dependancies #
+# Download Maven Dependencies #
 ###############################
-RUN cd ${CLAW_HOME}/camel && mvn clean install -Dmaven.repo.local=${M2_HOME}/repository
+RUN cd ${CLAW_HOME}/Alpaca/commands && composer install && \
+    cd ${CLAW_HOME}/Alpaca && mvn clean install -Dmaven.repo.local=${M2_HOME}/repository
 
 #####################
 # Islandora Modules #
 #####################
 # This is a temporary measure until we split up the repo into submodules.
 # We will eventually make it part of the drush make file like everything else.
-RUN ln -s ${CLAW_HOME}/drupal ${DRUPAL_ROOT}/sites/all/modules/islandora && \
-    chown -R apache:apache /opt/claw/drupal && \
-    chmod -R g+rw /opt/claw
+RUN ln -s ${CLAW_HOME}/islandora ${DRUPAL_ROOT}/sites/all/modules/islandora && \
+    chown -R apache:apache ${CLAW_HOME}/islandora && \
+    chmod -R g+rw ${CLAW_HOME}
 
 #############
 # Oh My ZSH #
