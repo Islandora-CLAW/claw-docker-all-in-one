@@ -58,7 +58,7 @@ ARG MAVEN_VERSION="3.3.9"
 ENV M2_HOME=/opt/maven \
     PATH=${PATH}:/opt/maven/bin
 
-RUN curl -L http://ftp.ps.pl/pub/apache/maven/maven-${MAVEN_VERSION%%.*}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | \
+RUN curl -L http://archive.apache.org/dist/maven/maven-${MAVEN_VERSION%%.*}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | \
     tar -xzf - -C /opt && \
     mv /opt/apache-maven-${MAVEN_VERSION} ${M2_HOME}
 
@@ -75,7 +75,7 @@ ENV CATALINA_HOME=/opt/tomcat \
 RUN addgroup tomcat && \
     adduser -s /sbin/nologin -G tomcat -SDH -h ${CATALINA_HOME} tomcat
 
-RUN curl -L http://ftp.ps.pl/pub/apache/tomcat/tomcat-${TOMCAT_VERSION%%.*}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz | \
+RUN curl -L http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_VERSION%%.*}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz | \
     tar -xzf - -C /tmp && \
     mv /tmp/apache-tomcat-${TOMCAT_VERSION} ${CATALINA_HOME} && \
     rm -rf ${CATALINA_HOME}/webapps/docs && \
